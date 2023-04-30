@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak <jchennak@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:26 by jchennak          #+#    #+#             */
-/*   Updated: 2023/04/30 17:04:34 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/04/30 20:36:23 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 #include <map>
 #include <ctime>
 #include <fstream>
+#include <cstdio>
 
 class BitcoinExchange {
   
   private :
     std::string csvfile;
-    std::map<std::tm, int> bitcoin;
+    std::map<std::string, float> bitcoin;
     
   public :
     BitcoinExchange();

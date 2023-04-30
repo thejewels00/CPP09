@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak <jchennak@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:21 by jchennak          #+#    #+#             */
-/*   Updated: 2023/04/29 18:18:49 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/04/30 19:56:40 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ int main(int argc, char **argv)
     {
         
         std::string csvfile = argv[1];
+        try
+        {
+            BitcoinExchange a;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
        // extension_file(csvfile);
         
         // check the extention
@@ -44,7 +53,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::cerr <<  "Usage: " << argv[0] << " <csv_file>" << std::endl;
+        std::cerr <<  "Usage: " << argv[0] << " <PSV file>" << std::endl;
         return 1;
     }
     return 0;
