@@ -6,14 +6,15 @@
 #    By: jchennak <jchennak@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 16:45:25 by jchennak          #+#    #+#              #
-#    Updated: 2023/04/19 16:46:59 by jchennak         ###   ########.fr        #
+#    Updated: 2023/04/30 17:11:42 by jchennak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
 NAME = btc
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS =  main.cpp
+SRCS =  main.cpp \
+		BitcoinExchange.cpp
 
 all : $(NAME)
 
