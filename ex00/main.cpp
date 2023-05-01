@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:21 by jchennak          #+#    #+#             */
-/*   Updated: 2023/04/30 19:56:40 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/01 18:49:11 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,37 @@
 // }
 
 
+void    parsing_file(std::string file, BitcoinExchange &database)
+{
+    std::ifstream infile;
+    std::string   line;
+    
+    infile.open(file);
+    if(!infile.is_open())
+        throw Error_in_file_opening();
+    std::getline(infile, line);
+    if(line != "date | value")
+        throw File_format();
+    database.display_result(infile);
+    infile.close();
+}
+
+
+
 int main(int argc, char **argv)
 {
     if(argc == 2)
     {
-        
-        std::string csvfile = argv[1];
         try
         {
-            BitcoinExchange a;
+            BitcoinExchange database;
+                
+            parsing_file(argv[1], database);
         }
         catch(const std::exception& e)
         {
             std::cerr << e.what() << '\n';
         }
-        
-       // extension_file(csvfile);
-        
-        // check the extention
-        // open the file
-        // read the file
-        // print it :D 
-        
     }
     else
     {
