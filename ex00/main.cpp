@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:21 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/01 18:49:11 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/03 01:42:39 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int main(int argc, char **argv)
     {
         try
         {
-            BitcoinExchange database;
-                
+            BitcoinExchange database;     
             parsing_file(argv[1], database);
         }
         catch(const std::exception& e)
