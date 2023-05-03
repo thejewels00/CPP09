@@ -6,24 +6,13 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:23:33 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/03 03:20:19 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/03 03:34:50 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
 
-
-std::tm convertStringToTm(const std::string& str) {
-    
-    std::tm tm = {};
-
-    std::sscanf(str.c_str(), "%d-%d-%d", &tm.tm_year, &tm.tm_mon, &tm.tm_mday);
-
-    std::mktime(&tm);
-
-    return tm;
-}
 
 
 BitcoinExchange::BitcoinExchange() : csvfile("data.csv")
@@ -83,7 +72,7 @@ BitcoinExchange::~BitcoinExchange()
 
 void  BitcoinExchange::show_database()
 {
-    for(std::map<std::string , float>::iterator i = bitcoin.begin(); i != bitcoin.end(); ++i)
+    for(std::map<std::string , long>::iterator i = bitcoin.begin(); i != bitcoin.end(); ++i)
     {
         std::cout << i->first << " | " << i->second << std::endl;
     }
@@ -119,7 +108,7 @@ int is_valide_time(std::string time)
     return 1;
 }
 
-float is_valide_value(std::string value)
+long is_valide_value(std::string value)
 {
     long v;
 
@@ -134,16 +123,16 @@ float is_valide_value(std::string value)
         std::cerr << "Error: not a positive number." << std::endl;
         return -1;
     }
-    return stof(value);;
+    return stol(value);
 }
 
 
 void  BitcoinExchange::display_result(std::ifstream & file)
 {
     std::string line;
-    float       value;
+    long       value;
     std::string date;
-    std::map<std::string ,float>::iterator upper;
+    std::map<std::string ,long>::iterator upper;
 
     while(std::getline(file, line))
     {
