@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:21 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/03 01:42:39 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/04 21:26:07 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ void    parsing_file(std::string file, BitcoinExchange &database)
     infile.open(file);
     if(!infile.is_open())
         throw Error_in_file_opening();
-    std::getline(infile, line);
-    if(line != "date | value")
-        throw File_format();
     database.display_result(infile);
     infile.close();
 }

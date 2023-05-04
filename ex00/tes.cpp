@@ -6,7 +6,7 @@ int main()
     
     std::string str = "2008-01-1-";
     int year, mounth, day;
-    //long btc;
+    //float btc;
     int i = std::sscanf(str.c_str(), "%d-%d-%d", &year, &mounth, &day);
     std::cout << year << "-" << mounth << "-" << day << std::endl;
 

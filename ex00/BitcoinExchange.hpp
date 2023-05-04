@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:26 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/03 03:29:07 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/04 23:24:58 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ class BitcoinExchange {
   
   private :
     std::string csvfile;
-    std::map<std::string, long> bitcoin;
+    std::map<double, float> bitcoin;
+
+
   public :
     BitcoinExchange();
     BitcoinExchange(std::string csvfile);//
@@ -43,9 +45,6 @@ class BitcoinExchange {
     void  show_database();
     void  display_result(std::ifstream &file);
     
-    
-    // class Line_error: public std::exception {
-    //     const char* what() const throw();
-    // };
+  
 };
 #endif

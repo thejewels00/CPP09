@@ -6,20 +6,39 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:23:33 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/03 03:34:50 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/04 23:53:32 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
+// todo you need to check if it's a digit :D
+int check_if_digit(std::string date)
+{
+    while(date[])
+}
+
+double  date_to_double(std::string date)
+{
+    if(date[4] != '-' || date[7] != '-')
+    {
+        std::cout << "Error: bad input => " << date << std::endl;
+        return -1;
+    }
+    date.erase(4, 1);
+    date.erase(6, 1);
+    check_if_digit(date);
+}
 
 
+
+// * i'm working her :D   you need to make data in perfect way 
 
 BitcoinExchange::BitcoinExchange() : csvfile("data.csv")
 {
     std::ifstream   infile;
     std::string     line;
-    std::string     date;
+    double          date;
 
 
 
@@ -29,7 +48,7 @@ BitcoinExchange::BitcoinExchange() : csvfile("data.csv")
     std::getline(infile, line);
     while(std::getline(infile, line))
     {
-        date = line.substr(0, 10);
+        date = date_to_double(line.substr(0, 10));
         bitcoin[date] = stof(line.substr(11));
     }
 }
@@ -72,7 +91,7 @@ BitcoinExchange::~BitcoinExchange()
 
 void  BitcoinExchange::show_database()
 {
-    for(std::map<std::string , long>::iterator i = bitcoin.begin(); i != bitcoin.end(); ++i)
+    for(std::map<std::string , float>::iterator i = bitcoin.begin(); i != bitcoin.end(); ++i)
     {
         std::cout << i->first << " | " << i->second << std::endl;
     }
@@ -84,73 +103,15 @@ const char* Error_in_file_opening::what() const throw()
     return "Error : the file can't be opened";
 }
 
-const char* File_format::what() const throw()
-{
-    return "Error : the file format is incorrect";
-}
 
-int is_valide_time(std::string time)
-{
-    int mounth;
-    int day;
-    
-    //std::cout << time.substr(5, 6) << std::endl;
 
-    mounth = stoi(time.substr(5, 7)) ;
-    day = stoi(time.substr(8, 10));
-    // std::cout << "day>" << day << std::endl;
-    // std::cout << "month>" << mounth << std::endl;
-    if(stoi(time.substr(0,4)) < 2008 || mounth < 1 || mounth > 12 || day < 1 || day > 31) // you can test this
-    {
-        std::cerr << "Error: bad input => " << time << std::endl;
-        return -1;
-    }
-    return 1;
-}
 
-long is_valide_value(std::string value)
-{
-    long v;
-
-    v = stol(value);
-    if(v > INT_MAX) // you can test this negative number 
-    {
-        std::cerr << "Error: too large a number." << std::endl;
-        return -1;
-    }
-    else if(v < 0)
-    {
-        std::cerr << "Error: not a positive number." << std::endl;
-        return -1;
-    }
-    return stol(value);
-}
 
 
 void  BitcoinExchange::display_result(std::ifstream & file)
 {
-    std::string line;
-    long       value;
-    std::string date;
-    std::map<std::string ,long>::iterator upper;
+    
+        
 
-    while(std::getline(file, line))
-    {
-        date = line.substr(0, 10);
-        if(is_valide_time(date) == -1)
-            continue ;
-        if (line.find(" | ") != 10)
-            throw File_format();
-        if((value = is_valide_value(line.substr(13)) ) == -1)
-            continue ;
-        upper = this->bitcoin.upper_bound(date);
-        if(upper == this->bitcoin.begin())
-        {
-            std::cerr << "Error: this date is not exist" << std::endl;
-            continue;
-        }
-        // ! else if() there is a probleme here  about  if the upper  ==  end();
-        upper--;
-        std::cout << date << " => " << value << " = " << upper->second * value << std::endl;
-    }
 }
+ 
