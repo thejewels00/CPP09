@@ -13,12 +13,21 @@
 #include "BitcoinExchange.hpp"
 
 // todo you need to check if it's a digit :D
-int check_if_digit(std::string date)
+boolean check_if_digit(std::string date)
 {
-    while(date[])
+    int i;
+
+    i = 0;
+    while(date[i])
+    {
+        if(!std::isdigit(date[i]))
+            return 0;
+        i++;
+    }
+    return 1;
 }
 
-double  date_to_double(std::string date)
+int  date_to_double(std::string date)
 {
     if(date[4] != '-' || date[7] != '-')
     {
@@ -27,7 +36,12 @@ double  date_to_double(std::string date)
     }
     date.erase(4, 1);
     date.erase(6, 1);
-    check_if_digit(date);
+    if(!check_if_digit(date))
+    {
+        std::cout << "Error: bad input => " << date << std::endl;
+        return -1;
+    }
+    return stoi(date);
 }
 
 
@@ -38,7 +52,7 @@ BitcoinExchange::BitcoinExchange() : csvfile("data.csv")
 {
     std::ifstream   infile;
     std::string     line;
-    double          date;
+    int             date;
 
 
 
@@ -111,6 +125,11 @@ const char* Error_in_file_opening::what() const throw()
 void  BitcoinExchange::display_result(std::ifstream & file)
 {
     
+    while(std::getline(file, line))
+    {
+
+        
+    }
         
 
 }

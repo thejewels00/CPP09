@@ -33,7 +33,7 @@ class BitcoinExchange {
   
   private :
     std::string csvfile;
-    std::map<double, float> bitcoin;
+    std::map<int, float> bitcoin;
 
 
   public :
