@@ -27,7 +27,7 @@ boolean check_if_digit(std::string date)
     return 1;
 }
 
-int  date_to_double(std::string date)
+int  date_to_int(std::string date)
 {
     if(date[4] != '-' || date[7] != '-')
     {
@@ -41,7 +41,15 @@ int  date_to_double(std::string date)
         std::cout << "Error: bad input => " << date << std::endl;
         return -1;
     }
-    return stoi(date);
+
+    int d = stoi(date);
+
+    if (d % 100 > 31 || d % 100 == 0 || d % 10000  > 1231 || d % 10000 < 101)
+    {
+        std::cout << "Error: bad input => " << date << std::endl;
+        return -1;
+    }
+    return d;
 }
 
 
@@ -62,7 +70,7 @@ BitcoinExchange::BitcoinExchange() : csvfile("data.csv")
     std::getline(infile, line);
     while(std::getline(infile, line))
     {
-        date = date_to_double(line.substr(0, 10));
+        date = date_to_int(line.substr(0, 10));
         bitcoin[date] = stof(line.substr(11));
     }
 }
@@ -118,19 +126,77 @@ const char* Error_in_file_opening::what() const throw()
 }
 
 
+float check_value(std::string value)
+{
+    double v;
+    char   *rest;
 
+    v = strtod(value.c_str(), &rest);
+    if(rest != NULL)
+    {
+        std::cout << "Error : not a number." << std::endl;
+        return -1;
+    }
+    if(v > 1000)
+    {
+        std::cout << "Error: too large a number." << std::endl;
+        return -1;
+    }
+    if(v < 0)
+    {
+        std::cout << "Error: not a positive number." << std::endl;
+        return -1;
+    }
+
+    return float(v);
+}
 
 
 
 void  BitcoinExchange::display_result(std::ifstream & file)
 {
     
+    int date;
+    float v;
+   
+    std::getline(file, line);
+    std::map<std::string ,long>::iterator upper;
+    // if(line != "date | value")
+    // {
+        
+    // }
+    
+
     while(std::getline(file, line))
-    {
+    { 
 
-        
-    }
-        
+        int date;
 
+        if((date = date_to_int(line.substr(0, 10))) == -1)
+            continue ;
+        if (line.find(" | ") != 10)
+        {
+            std::cout << "Error : incorrect format" << std::endl;
+            continue;
+        }
+        if(v = check_value(line.substr(13)) == -1)
+            continue;
+        his->bitcoin.begin().first;
+
+        if( date < this->bitcoin.begin().first)
+        {
+            std::cout << "Error : incorrect date" << std::endl;
+            continue;
+        }
+        else if( date >= this->bitcoin.end().first)
+        {
+            std::cout << date << " => " << value << " = " << this->bitcoin.end()->second * value << std::endl;
+            continue ;
+
+        }
+
+        upper = this->bitcoin.upper_bound(date);
+        upper--;
+        std::cout << date << " => " << value << " = " << upper->second * v << std::endl;
+    }     
 }
- 
