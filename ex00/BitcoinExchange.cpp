@@ -158,20 +158,19 @@ void  BitcoinExchange::display_result(std::ifstream & file)
     
     int date;
     float v;
+    int i = 0;
    
     std::getline(file, line);
     std::map<std::string ,long>::iterator upper;
-    // if(line != "date | value")
-    // {
-        
-    // }
-    
 
     while(std::getline(file, line))
-    { 
-
-        int date;
-
+    {
+        if(i = 0 && line == "date | value")
+        {
+            i = 1;
+            continue;
+        }
+        i = 1;
         if((date = date_to_int(line.substr(0, 10))) == -1)
             continue ;
         if (line.find(" | ") != 10)
@@ -194,7 +193,6 @@ void  BitcoinExchange::display_result(std::ifstream & file)
             continue ;
 
         }
-
         upper = this->bitcoin.upper_bound(date);
         upper--;
         std::cout << date << " => " << value << " = " << upper->second * v << std::endl;
