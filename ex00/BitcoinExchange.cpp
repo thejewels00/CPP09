@@ -6,14 +6,14 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:23:33 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/04 23:53:32 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/07 01:37:50 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
 // todo you need to check if it's a digit :D
-boolean check_if_digit(std::string date)
+int check_if_digit(std::string date)
 {
     int i;
 
@@ -79,7 +79,7 @@ BitcoinExchange::BitcoinExchange(std::string csvfile) : csvfile(csvfile)
 {
     std::ifstream   infile;
     std::string     line;
-    std::string     date;
+    int16_t         date;
 
     infile.open(this->csvfile);
     if(!infile.is_open())
@@ -87,7 +87,7 @@ BitcoinExchange::BitcoinExchange(std::string csvfile) : csvfile(csvfile)
     std::getline(infile, line);
     while(std::getline(infile, line))
     {
-        date = line.substr(0, 10);
+        date = date_to_int(line.substr(0, 10));
         bitcoin[date] = stof(line.substr(11));
     }
 }
@@ -111,14 +111,6 @@ BitcoinExchange::~BitcoinExchange()
 }
 
 
-void  BitcoinExchange::show_database()
-{
-    for(std::map<std::string , float>::iterator i = bitcoin.begin(); i != bitcoin.end(); ++i)
-    {
-        std::cout << i->first << " | " << i->second << std::endl;
-    }
-}
-
 
 const char* Error_in_file_opening::what() const throw()
 {
@@ -132,9 +124,9 @@ float check_value(std::string value)
     char   *rest;
 
     v = strtod(value.c_str(), &rest);
-    if(rest != NULL)
+    if(rest[0] != '\0')
     {
-        std::cout << "Error : not a number." << std::endl;
+        std::cout << value << " Error : not a number." << std::endl;
         return -1;
     }
     if(v > 1000)
@@ -156,16 +148,15 @@ float check_value(std::string value)
 void  BitcoinExchange::display_result(std::ifstream & file)
 {
     
-    int date;
-    float v;
-    int i = 0;
-   
-    std::getline(file, line);
-    std::map<std::string ,long>::iterator upper;
-
+    int         date;
+    float       v;
+    int         i = 0;
+    std::string line;
+    std::map<int, float>::iterator upper;
+    
     while(std::getline(file, line))
     {
-        if(i = 0 && line == "date | value")
+        if(i == 0 && line == "date | value")
         {
             i = 1;
             continue;
@@ -178,23 +169,22 @@ void  BitcoinExchange::display_result(std::ifstream & file)
             std::cout << "Error : incorrect format" << std::endl;
             continue;
         }
-        if(v = check_value(line.substr(13)) == -1)
+        if((v = check_value(line.substr(13))) == -1)
             continue;
-        his->bitcoin.begin().first;
-
-        if( date < this->bitcoin.begin().first)
-        {
+        if(date < this->bitcoin.begin()->first)
+        {            
             std::cout << "Error : incorrect date" << std::endl;
             continue;
         }
-        else if( date >= this->bitcoin.end().first)
+        else if(date >= std::prev(this->bitcoin.end())->first)
         {
-            std::cout << date << " => " << value << " = " << this->bitcoin.end()->second * value << std::endl;
+            std::cout << date << " => +" << v << " = " << this->bitcoin.end()->second * v << std::endl;
             continue ;
-
         }
+        
         upper = this->bitcoin.upper_bound(date);
         upper--;
-        std::cout << date << " => " << value << " = " << upper->second * v << std::endl;
+        line = line.substr(0, 10);
+        std::cout << line << " => ******* " << v << " = " << upper->second * v << std::endl;
     }     
 }

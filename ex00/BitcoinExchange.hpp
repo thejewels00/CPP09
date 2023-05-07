@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 16:57:26 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/04 23:24:58 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/07 00:40:48 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ class BitcoinExchange {
     ~BitcoinExchange();
     BitcoinExchange(const BitcoinExchange &src);//
     BitcoinExchange & operator=(const BitcoinExchange &src);//
-    void  show_database();
     void  display_result(std::ifstream &file);
     
   
