@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:23:33 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/07 01:37:50 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/09 00:22:32 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,37 @@ int check_if_digit(std::string date)
 
 int  date_to_int(std::string date)
 {
+    std::string dt = date;
     if(date[4] != '-' || date[7] != '-')
     {
-        std::cout << "Error: bad input => " << date << std::endl;
+        std::cerr << "Error: bad input => " << dt << std::endl;
         return -1;
     }
     date.erase(4, 1);
     date.erase(6, 1);
     if(!check_if_digit(date))
     {
-        std::cout << "Error: bad input => " << date << std::endl;
+        std::cerr << "Error: bad input 6565=> " << dt << std::endl;
         return -1;
     }
 
-    int d = stoi(date);
+    int d = strtod(date.c_str(), NULL);
 
     if (d % 100 > 31 || d % 100 == 0 || d % 10000  > 1231 || d % 10000 < 101)
     {
-        std::cout << "Error: bad input => " << date << std::endl;
+        std::cerr << "Error: bad input=> " << dt << std::endl;
+        return -1;
+    }
+    int c = (d % 10000)/100;
+    int k = d % 100;
+    if(c == 2 && k > 29)
+    {
+        std::cerr << "Error: bad input => " << dt << std::endl;
+        return -1;
+    }
+    if(k == 31 && (c == 4 || c == 6 || c == 9 || c == 11))
+    {
+        std::cerr << "Error: bad input => " << dt << std::endl;
         return -1;
     }
     return d;
@@ -71,7 +84,7 @@ BitcoinExchange::BitcoinExchange() : csvfile("data.csv")
     while(std::getline(infile, line))
     {
         date = date_to_int(line.substr(0, 10));
-        bitcoin[date] = stof(line.substr(11));
+        bitcoin[date] = strtod(line.substr(11).c_str(), NULL);
     }
 }
 
@@ -88,7 +101,7 @@ BitcoinExchange::BitcoinExchange(std::string csvfile) : csvfile(csvfile)
     while(std::getline(infile, line))
     {
         date = date_to_int(line.substr(0, 10));
-        bitcoin[date] = stof(line.substr(11));
+        bitcoin[date] = strtod(line.substr(11).c_str(), NULL);
     }
 }
 
@@ -152,8 +165,11 @@ void  BitcoinExchange::display_result(std::ifstream & file)
     float       v;
     int         i = 0;
     std::string line;
-    std::map<int, float>::iterator upper;
+    std::map<int, float>::iterator upper, it_end;
     
+
+    it_end = this->bitcoin.end();
+    it_end--;
     while(std::getline(file, line))
     {
         if(i == 0 && line == "date | value")
@@ -176,15 +192,15 @@ void  BitcoinExchange::display_result(std::ifstream & file)
             std::cout << "Error : incorrect date" << std::endl;
             continue;
         }
-        else if(date >= std::prev(this->bitcoin.end())->first)
+        else if(date >= it_end->first)
         {
-            std::cout << date << " => +" << v << " = " << this->bitcoin.end()->second * v << std::endl;
+            std::cout << date << " => " << v << " = " << it_end->second * v << std::endl;
             continue ;
         }
         
         upper = this->bitcoin.upper_bound(date);
         upper--;
         line = line.substr(0, 10);
-        std::cout << line << " => ******* " << v << " = " << upper->second * v << std::endl;
+        std::cout << line << " => " << v << " = " << upper->second * v << std::endl;
     }     
 }
