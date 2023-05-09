@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPN.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:20:38 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/09 00:18:25 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:38:23 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ double operation(std::string op)
 
     op= remove_spaces(op);
     
-    if(!isdigit(op[0]))
-        print_error("error");            
+    // if(!isdigit(op[0]))
+    //     print_error("error");  noo need this part :D
     while(op[i])
     {
         if(isdigit(op[i]))
