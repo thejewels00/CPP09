@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:12:28 by jawaher           #+#    #+#             */
-/*   Updated: 2023/05/09 00:18:37 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/10 13:31:58 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int main(int argc, char **argv)
     {
         result = operation(argv[1]);
         std::cout << result << std::endl;
- 
     }
     else
     {
