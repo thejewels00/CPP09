@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+         #
+#    By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 15:08:56 by jchennak          #+#    #+#              #
-#    Updated: 2023/05/13 01:35:11 by jchennak         ###   ########.fr        #
+#    Updated: 2023/05/16 20:37:06 by jchennak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = c++
 NAME = PmergeMe
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 SRCS =  main.cpp \
 		PmergeMe.cpp \
 

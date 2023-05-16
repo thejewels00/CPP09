@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:10:57 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/16 01:48:02 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:19:26 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,10 @@ PmergeMe::PmergeMe(char **av) {
     this->parsing_vec = pars_vect(av);
     show_vec();
     this->parsing_list = pars_list(av);
-    show_list();
-   // sort_vec()
-    
+   // show_list();
+    std::cout << "sorting ---" << std::endl;
+    sort_vec();
+    show_vec();
 }
 
 PmergeMe::~PmergeMe()
@@ -192,12 +193,138 @@ void    PmergeMe::show_list()
 }
 
 
-void PmergeMe::sort_list()
-{
-    if()
+// void PmergeMe::sort_list()
+// {
+//     if()
+// }
+
+
+// void PmergeMe::insertion_sort(int l, int r)
+// {
+//     for (int i = l; i <= r; i++)
+//     {
+//         double tmp = this->vec_ctn[i];
+//         int j = i;
+//         while ((j > 1) && (this->vec_ctn[j - 1] > tmp))
+//         {
+//              this->vec_ctn[j] = this->vec_ctn[j - 1];
+//              j--;
+//         }
+//         this->vec_ctn[j] = tmp;
+//     }
+// }
+
+// void PmergeMe::merge(std::vector<int> temp, int l, int m, int r)
+// {
+//     int i = l;
+//     int j = m + 1;
+//     int k = l;
+//     while ((i <= m) && (j <= r))
+//     {
+//         if (this->vec_ctn[i] < this->vec_ctn[j])
+//         {
+//             temp[k] = this->vec_ctn[i];
+//             i++;
+//         }
+//         else
+//         {
+//             temp[k] = this->vec_ctn[j];
+//             j++;
+//         }
+//         k++;
+//     }
+//         for (; j <= r; j++, k++)
+//         {
+//             std::cout << k << " ";
+//             temp[k] = this->vec_ctn[j];
+//         }
+
+//         for (; i <= m; i++, k++)
+//             temp[k] = this->vec_ctn[i];
+
+//         for (i = l; i <= r; i++)
+//             this->vec_ctn[i] = temp[i];
+// }
+
+// void PmergeMe::mergesort(std::vector<int> temp, int l, int r, int threshold)
+// {
+//     if (l < r)
+//     {
+//         if ((r - l) <= threshold)
+//             insertion_sort(l, r);
+//         else
+//         {
+//             int m = (l + r) / 2;
+//             mergesort(temp, l, m, threshold);
+//             mergesort(temp, m + 1, r, threshold);
+//             std::cout << "hooo" << std::endl;   
+//             merge(temp, l, m, r);
+//         }
+//     }
+//     show_vec();
+// }
+
+void PmergeMe::insertionSort(int p, int q) {
+    
+    for (int i = p; i < q; i++) {
+        int tempVal = vec_ctn[i + 1];
+        int j = i + 1;
+        while (j > p && vec_ctn[j - 1] > tempVal) {
+            vec_ctn[j] = vec_ctn[j - 1];
+            j--;
+        }
+        vec_ctn[j] = tempVal;
+    }
 }
 
-// void    PmergeMe::Prepar_list()
-// {
+void PmergeMe::merge(int p, int q, int r) {
+    int n1 = q - p + 1;
+    int n2 = r - q;
+
+    std::vector<int> LA;
+    std::vector<int> RA;
     
-// }
+    LA.insert(LA.begin(), vec_ctn. begin()+ p , vec_ctn.begin()+ q + 1);
+    RA.insert(RA.begin(), vec_ctn. begin()+ q + 1 , vec_ctn.begin()+ r + 1);
+    
+    int RIDX = 0;
+    int LIDX = 0;
+    
+    for (int i = p; i < r - p + 1; i++) {
+        if (RIDX == n2) {
+            vec_ctn[i] = LA[LIDX];
+            LIDX++;
+        } else if (LIDX == n1) {
+            vec_ctn[i] = RA[RIDX];
+            RIDX++;
+        } else if (RA[RIDX] > LA[LIDX]) {
+            vec_ctn[i] = LA[LIDX];
+            LIDX++;
+        } else {
+            vec_ctn[i] = RA[RIDX];
+            RIDX++;
+        }
+    }
+}
+
+
+void    PmergeMe::sort(int p, int r) {
+    if (r - p > 10) {
+        int q = (p + r) / 2;
+        sort(p, q);
+        sort(q + 1, r);
+        merge(p, q, r);
+    } else {
+        insertionSort(./p, r);
+    }
+}
+
+
+void PmergeMe::sort_vec()
+{
+    std::vector<int> temp;
+    std::cout << "hi " << std::endl;
+    sort(0, vec_ctn.size() - 1);
+    std::cout << "hi " << std::endl;
+}
+

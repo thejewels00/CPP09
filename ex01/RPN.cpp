@@ -6,7 +6,7 @@
 /*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:20:38 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/09 14:38:23 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:12:24 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ double operation(std::string op)
         }
         i++;
     }
-
     if(stack.size() != 1)
         print_error("error");
     return stack.top();

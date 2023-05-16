@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:10:54 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/16 01:46:48 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:13:32 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <ctime>
 #include <cctype>
 #include <climits>
+#include <cstdlib>
 
 class PmergeMe 
 {
@@ -37,10 +38,14 @@ class PmergeMe
         PmergeMe(char **argv);
         std::clock_t    pars_vect(char **av);
         std::clock_t    pars_list(char **av);
-        void    sort_list();
-       // void    sort_vec();
+       // void    sort_list();
+        void    sort_vec();
         void    show_list();
         void    show_vec();
+        void    sort(int p, int r);
+        void    merge(int p, int q, int r);
+        void    insertionSort(int p, int q);
+        
         
 };
 
