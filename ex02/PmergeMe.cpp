@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:10:57 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/13 02:21:45 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/16 01:48:02 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ std::clock_t    PmergeMe::pars_vect(char **av)
             }
             else if(isspace(arg[j]) && buff != "") 
             {
-                int number = atoi(buff.c_str());
-                if(number > 0 && number < INT_MAX)
+                long number = atol(buff.c_str());
+                if(number > 0 && number <= INT_MAX)
                 {
                     vec_ctn.push_back(number); 
                     buff = "";
@@ -62,8 +62,8 @@ std::clock_t    PmergeMe::pars_vect(char **av)
         }    
         if(buff != "") 
         {
-            int number = atoi(buff.c_str());
-            if(number > 0 && number < INT_MAX)
+            long number = atol(buff.c_str());
+            if(number > 0 && number <= INT_MAX)
             {
                 vec_ctn.push_back(number); 
                 buff = "";
@@ -108,8 +108,8 @@ std::clock_t PmergeMe::pars_list(char **av)
             }
             else if(isspace(arg[j]) && buff != "") 
             {
-                int number = atoi(buff.c_str());
-                if(number > 0 && number < INT_MAX)
+                long number = atol(buff.c_str());
+                if(number > 0 && number <= INT_MAX)
                 {
                     list_ctn.push_back(number); 
                     buff = "";
@@ -124,8 +124,8 @@ std::clock_t PmergeMe::pars_list(char **av)
         }    
         if(buff != "") 
         {
-            int number = atoi(buff.c_str());
-            if(number > 0 && number < INT_MAX)
+            long number = atol(buff.c_str());
+            if(number > 0 && number <= INT_MAX)
             {
                 list_ctn.push_back(number); 
                 buff = "";
@@ -148,7 +148,7 @@ PmergeMe::PmergeMe(char **av) {
     show_vec();
     this->parsing_list = pars_list(av);
     show_list();
-
+   // sort_vec()
     
 }
 
@@ -192,6 +192,10 @@ void    PmergeMe::show_list()
 }
 
 
+void PmergeMe::sort_list()
+{
+    if()
+}
 
 // void    PmergeMe::Prepar_list()
 // {

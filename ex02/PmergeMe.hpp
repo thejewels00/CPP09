@@ -6,7 +6,7 @@
 /*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:10:54 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/13 02:22:18 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/16 01:46:48 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ class PmergeMe
         PmergeMe(char **argv);
         std::clock_t    pars_vect(char **av);
         std::clock_t    pars_list(char **av);
-        //void    sort_list();
+        void    sort_list();
        // void    sort_vec();
         void    show_list();
         void    show_vec();
