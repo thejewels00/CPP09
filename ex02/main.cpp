@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
+/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:13:21 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/16 20:35:02 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/17 00:18:41 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int main(int argc , char **argv)
        PmergeMe b(argv);
     }
     else
-        std::cerr << "Usage :" << argv[0] << "< Numbers >" << std::endl;
+        std::cerr << "Usage :" << argv[0] << " < Numbers >" << std::endl;
     return 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
+/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:10:57 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/16 21:19:26 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/17 02:30:15 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ std::clock_t    PmergeMe::pars_vect(char **av)
     return last - first;
 }
 
-std::clock_t PmergeMe::pars_list(char **av)
+std::clock_t PmergeMe::pars_deque(char **av)
 {
     std::clock_t first,last;
     int i = 1,j;
@@ -111,7 +111,7 @@ std::clock_t PmergeMe::pars_list(char **av)
                 long number = atol(buff.c_str());
                 if(number > 0 && number <= INT_MAX)
                 {
-                    list_ctn.push_back(number); 
+                    deq_ctn.push_back(number); 
                     buff = "";
                 }
                 else
@@ -127,7 +127,7 @@ std::clock_t PmergeMe::pars_list(char **av)
             long number = atol(buff.c_str());
             if(number > 0 && number <= INT_MAX)
             {
-                list_ctn.push_back(number); 
+                deq_ctn.push_back(number); 
                 buff = "";
             }
             else
@@ -145,12 +145,30 @@ std::clock_t PmergeMe::pars_list(char **av)
  
 PmergeMe::PmergeMe(char **av) { 
     this->parsing_vec = pars_vect(av);
+    this->parsing_deque = pars_deque(av);
+   
+    std::cout << "Before :  ";
     show_vec();
-    this->parsing_list = pars_list(av);
-   // show_list();
-    std::cout << "sorting ---" << std::endl;
+   
+    std::clock_t first ,last;
+    first = clock();
     sort_vec();
-    show_vec();
+    last = clock();
+    this->st_vec = last - first;
+
+    first = clock();
+    sort_deque();
+    last = clock();
+    this->st_deq = last - first;
+    
+    std::cout << "After :  ";
+    show_deque();
+    
+    std::cout << "Time to process a range of " << vec_ctn.size() << " elements with std::vector : " 
+    << (st_vec + parsing_vec) * 1000000 / CLOCKS_PER_SEC << " us" << std::endl ; 
+    std::cout << "Time to process a range of " << deq_ctn.size() << " elements with std::deque : " 
+    << (st_deq + parsing_deque) * 1000000/ CLOCKS_PER_SEC << " us" << std::endl ; 
+     
 }
 
 PmergeMe::~PmergeMe()
@@ -161,19 +179,20 @@ PmergeMe::~PmergeMe()
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &src)
 {
-    this->parsing_list = src.parsing_list;
-    this->parsing_vec = src.parsing_list;
+    this->parsing_deque = src.parsing_deque;
+    this->parsing_vec = src.parsing_vec;
+    this->st_deq = src.st_deq;
+    this->st_vec = src.st_vec;
     
-    for (std::list<int>::iterator it = list_ctn.begin() ; it != list_ctn.end(); ++it)
+    for (std::deque<int>::iterator it = deq_ctn.begin() ; it != deq_ctn.end(); ++it)
     {
-        list_ctn.push_back(*it);
+        deq_ctn.push_back(*it);
         vec_ctn.push_back(*it);
     }
     return *this;
 }
 
 
-// // TODO YOU NEED TO PREPARE A COPY CONSTRUCTER and copy assignement
 PmergeMe::PmergeMe(const PmergeMe &src){
    *this = src;
 }
@@ -185,146 +204,147 @@ void    PmergeMe::show_vec()
     std::cout << std::endl;
 }
 
-void    PmergeMe::show_list() 
+
+void    PmergeMe::show_deque() 
 {
-    for (std::list<int>::iterator it = list_ctn.begin() ; it != list_ctn.end(); ++it)
+    for (std::deque<int>::iterator it = deq_ctn.begin() ; it != deq_ctn.end(); ++it)
         std::cout << ' ' << *it;
     std::cout << std::endl;
 }
 
+std::vector<int> merge_vecs(std::vector<int>& left, std::vector<int>& right)
+{
+    std::vector<int> result;
 
-// void PmergeMe::sort_list()
-// {
-//     if()
-// }
-
-
-// void PmergeMe::insertion_sort(int l, int r)
-// {
-//     for (int i = l; i <= r; i++)
-//     {
-//         double tmp = this->vec_ctn[i];
-//         int j = i;
-//         while ((j > 1) && (this->vec_ctn[j - 1] > tmp))
-//         {
-//              this->vec_ctn[j] = this->vec_ctn[j - 1];
-//              j--;
-//         }
-//         this->vec_ctn[j] = tmp;
-//     }
-// }
-
-// void PmergeMe::merge(std::vector<int> temp, int l, int m, int r)
-// {
-//     int i = l;
-//     int j = m + 1;
-//     int k = l;
-//     while ((i <= m) && (j <= r))
-//     {
-//         if (this->vec_ctn[i] < this->vec_ctn[j])
-//         {
-//             temp[k] = this->vec_ctn[i];
-//             i++;
-//         }
-//         else
-//         {
-//             temp[k] = this->vec_ctn[j];
-//             j++;
-//         }
-//         k++;
-//     }
-//         for (; j <= r; j++, k++)
-//         {
-//             std::cout << k << " ";
-//             temp[k] = this->vec_ctn[j];
-//         }
-
-//         for (; i <= m; i++, k++)
-//             temp[k] = this->vec_ctn[i];
-
-//         for (i = l; i <= r; i++)
-//             this->vec_ctn[i] = temp[i];
-// }
-
-// void PmergeMe::mergesort(std::vector<int> temp, int l, int r, int threshold)
-// {
-//     if (l < r)
-//     {
-//         if ((r - l) <= threshold)
-//             insertion_sort(l, r);
-//         else
-//         {
-//             int m = (l + r) / 2;
-//             mergesort(temp, l, m, threshold);
-//             mergesort(temp, m + 1, r, threshold);
-//             std::cout << "hooo" << std::endl;   
-//             merge(temp, l, m, r);
-//         }
-//     }
-//     show_vec();
-// }
-
-void PmergeMe::insertionSort(int p, int q) {
-    
-    for (int i = p; i < q; i++) {
-        int tempVal = vec_ctn[i + 1];
-        int j = i + 1;
-        while (j > p && vec_ctn[j - 1] > tempVal) {
-            vec_ctn[j] = vec_ctn[j - 1];
-            j--;
+    while (!left.empty() && !right.empty())
+	{
+        if (left.front() <= right.front())
+		{
+            result.push_back(left.front());
+            left.erase(left.begin());
         }
-        vec_ctn[j] = tempVal;
-    }
-}
-
-void PmergeMe::merge(int p, int q, int r) {
-    int n1 = q - p + 1;
-    int n2 = r - q;
-
-    std::vector<int> LA;
-    std::vector<int> RA;
-    
-    LA.insert(LA.begin(), vec_ctn. begin()+ p , vec_ctn.begin()+ q + 1);
-    RA.insert(RA.begin(), vec_ctn. begin()+ q + 1 , vec_ctn.begin()+ r + 1);
-    
-    int RIDX = 0;
-    int LIDX = 0;
-    
-    for (int i = p; i < r - p + 1; i++) {
-        if (RIDX == n2) {
-            vec_ctn[i] = LA[LIDX];
-            LIDX++;
-        } else if (LIDX == n1) {
-            vec_ctn[i] = RA[RIDX];
-            RIDX++;
-        } else if (RA[RIDX] > LA[LIDX]) {
-            vec_ctn[i] = LA[LIDX];
-            LIDX++;
-        } else {
-            vec_ctn[i] = RA[RIDX];
-            RIDX++;
+		else
+		{
+            result.push_back(right.front());
+            right.erase(right.begin());
         }
     }
+
+    while (!left.empty())
+	{
+        result.push_back(left.front());
+        left.erase(left.begin());
+    }
+    while (!right.empty())
+	{
+        result.push_back(right.front());
+        right.erase(right.begin());
+    }
+    return result;
 }
 
-
-void    PmergeMe::sort(int p, int r) {
-    if (r - p > 10) {
-        int q = (p + r) / 2;
-        sort(p, q);
-        sort(q + 1, r);
-        merge(p, q, r);
-    } else {
-        insertionSort(./p, r);
+std::vector<int> insertionSort(std::vector<int> &arr, int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
     }
+    
+    return arr;
+}
+
+std::vector<int> merge_insert_vect(std::vector<int>& vec) {
+    if (vec.size() <= 30) {
+        return insertionSort(vec, vec.size());
+    }
+
+    int mid = vec.size() / 2;
+    std::vector<int> left(vec.begin(), vec.begin() + mid);
+    std::vector<int> right(vec.begin() + mid, vec.end());
+
+    left = merge_insert_vect(left);
+    right = merge_insert_vect(right);
+
+    return merge_vecs(left, right);
 }
 
 
 void PmergeMe::sort_vec()
 {
-    std::vector<int> temp;
-    std::cout << "hi " << std::endl;
-    sort(0, vec_ctn.size() - 1);
-    std::cout << "hi " << std::endl;
+    this->vec_ctn = merge_insert_vect(this->vec_ctn);
 }
 
+std::deque<int> merge_deques(std::deque<int>& left, std::deque<int>& right)
+{
+    std::deque<int> result;
+
+    while (!left.empty() && !right.empty())
+	{
+        if (left.front() <= right.front())
+		{
+            result.push_back(left.front());
+            left.erase(left.begin());
+        }
+		else
+		{
+            result.push_back(right.front());
+            right.erase(right.begin());
+        }
+    }
+
+    while (!left.empty())
+	{
+        result.push_back(left.front());
+        left.erase(left.begin());
+    }
+
+    while (!right.empty())
+	{
+        result.push_back(right.front());
+        right.erase(right.begin());
+    }
+    return result;
+}
+
+std::deque<int> insertionSort_deque(std::deque<int> &arr, int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+    
+    return arr;
+}
+
+static std::deque<int> merge_insert_deque(std::deque<int>& deq) {
+    if (deq.size() <= 30) {
+        return insertionSort_deque(deq, deq.size());
+    }
+
+    int mid = deq.size() / 2;
+    std::deque<int> left(deq.begin(), deq.begin() + mid);
+    std::deque<int> right(deq.begin() + mid, deq.end());
+
+    left = merge_insert_deque(left);
+    right = merge_insert_deque(right);
+
+    return merge_deques(left, right);
+}
+
+
+void PmergeMe::sort_deque()
+{
+    this->deq_ctn = merge_insert_deque(this->deq_ctn);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchennak  <jchennak@student.42.fr>         +#+  +:+       +#+        */
+/*   By: jchennak <jchennak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 15:10:54 by jchennak          #+#    #+#             */
-/*   Updated: 2023/05/16 21:13:32 by jchennak         ###   ########.fr       */
+/*   Updated: 2023/05/17 02:31:39 by jchennak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <list>
+#include <deque>
 #include <ctime>
 #include <cctype>
 #include <climits>
@@ -25,9 +25,9 @@
 class PmergeMe 
 {
     private :
-        std::list<int>      list_ctn;
+        std::deque<int>      deq_ctn;
         std::vector<int>    vec_ctn;
-        std::clock_t        parsing_vec, parsing_list;
+        std::clock_t        parsing_vec, parsing_deque, st_deq, st_vec;
         
         PmergeMe();
         PmergeMe(const PmergeMe &src);
@@ -37,19 +37,13 @@ class PmergeMe
         ~PmergeMe();
         PmergeMe(char **argv);
         std::clock_t    pars_vect(char **av);
-        std::clock_t    pars_list(char **av);
-       // void    sort_list();
+        std::clock_t    pars_deque(char **av);
+        void    sort_deque();
         void    sort_vec();
-        void    show_list();
+        
+        void    show_deque();
         void    show_vec();
-        void    sort(int p, int r);
-        void    merge(int p, int q, int r);
-        void    insertionSort(int p, int q);
-        
-        
+            
 };
-
-
-
 
 #endif
